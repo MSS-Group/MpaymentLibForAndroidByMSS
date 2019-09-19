@@ -51,7 +51,7 @@ public class LoginDialog {
                 else
                 {
                     if (onLoginClickListener!=null) {
-                        onLoginClickListener.login(etUsername.getText().toString(), etPassword.getText().toString());
+                        //onLoginClickListener.login(etUsername.getText().toString(), etPassword.getText().toString());
                         loginDialog.dismiss();
                     }
                 }

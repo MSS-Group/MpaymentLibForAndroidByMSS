@@ -3,6 +3,7 @@ package com.mss.msstestlib;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,19 +29,30 @@ public class MainActivity extends AppCompatActivity {
         btGetAmount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tvUserAmout.setText("Your amount is "+UserManager.getUserAmount(etName.getText().toString()));
+                tvUserAmout.setText("Your amount is " + UserManager.getUserAmount(etName.getText().toString()));
             }
         });
 
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserManager.showLoginDialog(MainActivity.this, new OnLoginClickListener() {
-                    @Override
-                    public void login(String username, String password) {
-                        tvUserInfos.setText("Username = "+username+" Password = "+password);
-                    }
-                });
+                UserManager.showPaymentDialog(MainActivity.this,
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "10 DT",
+                        new OnLoginClickListener() {
+                            @Override
+                            public void payment(int resultCode, String token) {
+
+                                Log.e("Payment ResultCode =", String.valueOf(resultCode));
+                                Log.e("Payment Token =", token);
+
+                            }
+                        });
             }
         });
 

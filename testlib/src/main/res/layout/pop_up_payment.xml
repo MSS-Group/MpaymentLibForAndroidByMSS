@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:weightSum="1.0">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0.0dip"
+            android:layout_weight="0.42" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/closeBtn"
+                android:layout_width="50.0dip"
+                android:layout_height="50.0dip"
+                android:layout_gravity="center"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:src="@drawable/icon_close" />
+
+            <LinearLayout
+                android:id="@+id/layout_code_info"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30.0dip"
+                android:background="@drawable/bg_info_code"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <!--<ImageView
+                    android:id="@+id/image_info"
+                    android:layout_width="30.0dip"
+                    android:layout_height="30.0dip"
+                    android:layout_marginTop="15.0dip"
+                    app:srcCompat="@mipmap/icon_info"
+                    android:tint="@color/redOoredoo" />
+                &lt;!&ndash;android:src="@mipmap/icon_info"&ndash;&gt;
+                <TextView
+                    android:id="@+id/message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_marginTop="15.0dip"
+                    android:layout_marginRight="5.0dip"
+                    android:layout_marginBottom="20.0dip"
+                    android:gravity="center"
+                    android:text="@string/message_login"
+                    android:textColor="@color/blackOoredoo"
+                    android:textSize="@dimen/size_normal_text"
+                    android:fontFamily="@font/ooredooregular"
+                    />
+                <TextView
+                    android:id="@+id/message_no_intrenet"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_marginRight="5.0dip"
+                    android:layout_marginBottom="20.0dip"
+                    android:gravity="center"
+                    android:text="@string/message_login"
+                    android:textColor="@color/blackOoredoo"
+                    android:textSize="@dimen/size_normal_text"
+                    android:fontFamily="@font/ooredooregular" />-->
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="40.0dip"
+                    android:layout_marginTop="10.0dip"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:weightSum="9.0">
+                <Button
+                    android:id="@+id/btn_yes"
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+
+                    android:layout_weight="4.2"
+                    android:background="@drawable/btn_ok"
+                    android:gravity="center"
+                    android:text="@string/bt_login"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/ooredooregular"
+                    />
+
+                </LinearLayout>|
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
