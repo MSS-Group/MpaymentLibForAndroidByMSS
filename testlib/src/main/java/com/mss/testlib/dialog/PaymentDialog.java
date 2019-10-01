@@ -163,7 +163,7 @@ public class PaymentDialog {
                 dlg_one_button_tv_title.setText("Error !");
                 dlg_one_button_tv_message.setText("Echec de paiement .");
                 break;
-            case 1:
+            case 2:
                 dlg_one_button_tv_title.setTextColor(context.getResources().getColor(R.color.green_500));
                 dlg_one_button_tv_title.setText("SUCCESS !");
                 dlg_one_button_tv_message.setText("Paiement effectué avec succès.");
