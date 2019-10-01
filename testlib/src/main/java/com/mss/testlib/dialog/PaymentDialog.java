@@ -7,6 +7,7 @@ import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
+import android.text.Layout;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,12 +17,14 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mss.testlib.R;
+import com.mss.testlib.utils.passcodeview.PassCodeView;
 
 public class PaymentDialog {
 
@@ -29,12 +32,14 @@ public class PaymentDialog {
     private String amount;
     private int state = 0;
     private ImageView dlg_one_button_iv_icon;
+    private LinearLayout layoutPayment, layoutLogin;
     private TextView dlg_one_button_tv_title, dlg_one_button_tv_message;
-    private Button dlg_one_button_btn_ok;
+    private Button dlg_one_button_btn_ok, dlg_one_button_btn_login;
     private Dialog loginDialog;
     private ProgressBar progressBar;
     private OnLoginClickListener onLoginClickListener;
     private static final double DIALOG_WINDOW_WIDTH = 0.85;
+    private PassCodeView passCodeView;
 
     public PaymentDialog(Context context, String amount) {
         this.context = context;
@@ -52,29 +57,52 @@ public class PaymentDialog {
         View v = LayoutInflater.from(context).inflate(R.layout.pop_up_payment_validation1, null);
         loginDialog.setContentView(v);
         //setDialogWindowWidth(loginDialog,DIALOG_WINDOW_WIDTH);
+        layoutPayment = loginDialog.findViewById(R.id.layout_payment);
+        layoutLogin = loginDialog.findViewById(R.id.layout_login);
         dlg_one_button_iv_icon = loginDialog.findViewById(R.id.dlg_one_button_iv_icon);
         dlg_one_button_btn_ok = loginDialog.findViewById(R.id.dlg_one_button_btn_ok);
+        dlg_one_button_btn_login = loginDialog.findViewById(R.id.dlg_one_button_btn_login);
         dlg_one_button_tv_title = loginDialog.findViewById(R.id.dlg_one_button_tv_title);
         dlg_one_button_tv_message = loginDialog.findViewById(R.id.dlg_one_button_tv_message);
+        passCodeView = loginDialog.findViewById(R.id.pass_code_view);
         dlg_one_button_tv_title.setTextColor(context.getResources().getColor(R.color.zxing_possible_result_points));
         dlg_one_button_tv_title.setText("Paiement !");
-        dlg_one_button_tv_message.setText("Vous voulez effectuer un paiement d'un montant de :"+amount+" ?");
+        dlg_one_button_tv_message.setText("Vous voulez effectuer un paiement d'un montant de :" + amount + " ?");
         progressBar = loginDialog.findViewById(R.id.progressBar);
         dlg_one_button_btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (onLoginClickListener != null) {
+
                     if (state == 0) {
                         loading(state);
                         dlg_one_button_iv_icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_close));
                         onLoginClickListener.payment(1, "sfzshvljefùperfeùlkhveeùojetvbtlhveovejveùpigve");
                         state++;
                     } else if (state == 1) {
-                        loading(state);
-                        dlg_one_button_iv_icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_checked));
-                        onLoginClickListener.payment(0, "sfzshvljefùperfeùlkhveeùojetvbtlhveovejveùpigve");
+                        //loading(state);
+                        layoutPayment.setVisibility(View.GONE);
+                        layoutLogin.setVisibility(View.VISIBLE);
+                        onLoginClickListener.payment(2, "sfzshvljefùperfeùlkhveeùojetvbtlhveovejveùpigve");
+                        dlg_one_button_btn_login.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (passCodeView.getPassCodeText().length() == 4) {
+                                    layoutPayment.setVisibility(View.VISIBLE);
+                                    layoutLogin.setVisibility(View.GONE);
+                                    loading(state);
+                                    dlg_one_button_iv_icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_checked));
+                                    onLoginClickListener.payment(0, "sfzshvljefùperfeùlkhveeùojetvbtlhveovejveùpigve");
+                                    state++;
+                                } else {
+                                    passCodeView.setError(true);
+                                }
+                            }
+                        });
                         state++;
-                    } else {
+                    } /*else if (state == 2) {
+
+                    }*/ else {
                         loginDialog.dismiss();
                     }
                 }

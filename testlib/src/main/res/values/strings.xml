@@ -21,4 +21,7 @@
     <string name="error_title">Oh snap :/</string>
     <string name="error_message">Something went terribly wrong\n(probably my fault)</string>
     <string name="error_button_text">OK, no problem</string>
+    <string name="code_confidentiel">Veuillez saisir votre <u>code confidentiel Mobicash</u></string>
+    <string name="pin_confirm">Veuillez entrer votre Pincode pour confirmer</string>
+    <string name="error_5023">Mot de passe non valide. Veuillez réessayer à nouveau</string>
 </resources>
