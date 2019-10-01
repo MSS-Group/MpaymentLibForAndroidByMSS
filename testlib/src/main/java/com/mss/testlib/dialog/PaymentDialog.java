@@ -66,8 +66,8 @@ public class PaymentDialog {
         dlg_one_button_tv_message = loginDialog.findViewById(R.id.dlg_one_button_tv_message);
         passCodeView = loginDialog.findViewById(R.id.pass_code_view);
         dlg_one_button_tv_title.setTextColor(context.getResources().getColor(R.color.zxing_possible_result_points));
-        dlg_one_button_tv_title.setText("Paiement !");
-        dlg_one_button_tv_message.setText("Vous voulez effectuer un paiement d'un montant de :" + amount + " ?");
+        dlg_one_button_tv_title.setText(context.getResources().getString(R.string.payment_title));
+        dlg_one_button_tv_message.setText(context.getResources().getString(R.string.payment_message,amount));
         progressBar = loginDialog.findViewById(R.id.progressBar);
         dlg_one_button_btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,8 +141,8 @@ public class PaymentDialog {
 
     private void loading(final int state) {
         dlg_one_button_tv_title.setTextColor(context.getResources().getColor(R.color.zxing_possible_result_points));
-        dlg_one_button_tv_title.setText("Loading !");
-        dlg_one_button_tv_message.setText("En cours de paiement ...");
+        dlg_one_button_tv_title.setText(context.getResources().getString(R.string.loading_title));
+        dlg_one_button_tv_message.setText(context.getResources().getString(R.string.loading_message));
         dlg_one_button_iv_icon.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
         dlg_one_button_btn_ok.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
@@ -160,13 +160,13 @@ public class PaymentDialog {
         switch (state) {
             case 0:
                 dlg_one_button_tv_title.setTextColor(context.getResources().getColor(R.color.red_500));
-                dlg_one_button_tv_title.setText("Error !");
-                dlg_one_button_tv_message.setText("Echec de paiement .");
+                dlg_one_button_tv_title.setText(context.getResources().getString(R.string.error_title));
+                dlg_one_button_tv_message.setText(context.getResources().getString(R.string.error_message));
                 break;
             case 2:
                 dlg_one_button_tv_title.setTextColor(context.getResources().getColor(R.color.green_500));
-                dlg_one_button_tv_title.setText("SUCCESS !");
-                dlg_one_button_tv_message.setText("Paiement effectué avec succès.");
+                dlg_one_button_tv_title.setText(context.getResources().getString(R.string.success_title));
+                dlg_one_button_tv_message.setText(context.getResources().getString(R.string.success_message));
                 break;
         }
         dlg_one_button_iv_icon.setVisibility(View.VISIBLE);
