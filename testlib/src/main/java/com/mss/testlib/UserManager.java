@@ -24,7 +24,7 @@ public class UserManager {
         loginDialog.show();
     }
 
-    public static void showPaymentDialog(Context context,String idClient ,String idClientMobicash,String idMerchant ,String idMerchantMobicash,String idTransaction,String token,String amount, OnLoginClickListener onLoginClickListener){
+    public static void showPaymentDialog(Context context,String idClient ,String idClientMobicash,String idMerchant ,String idMerchantMobicash,String idTransaction,String idVersion,String token,String amount, OnLoginClickListener onLoginClickListener){
         PaymentDialog loginDialog = new PaymentDialog(context,amount);
         loginDialog.setOnLoginClickListener(onLoginClickListener);
         loginDialog.show();

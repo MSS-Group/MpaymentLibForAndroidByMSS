@@ -37,12 +37,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 UserManager.showPaymentDialog(MainActivity.this,
-                        "",
-                        "",
-                        "",
-                        "",
-                        "",
-                        "",
+                        "348945Y475865",
+                        "39565976545795695",
+                        "56956U78Y30U466086086",
+                        "5690557U07580757U0773",
+                        "192035558706770787",
+                        "1.2.1",
+                        "sfzshvljefùperfeùlkhveeùojetvbtlhveovejveùpigve",
                         "10 DT",
                         new OnLoginClickListener() {
                             @Override
