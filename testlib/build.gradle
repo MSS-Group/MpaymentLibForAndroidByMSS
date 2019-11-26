@@ -8,14 +8,27 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
 
     buildTypes {
+        debug{
+            buildConfigField "long", "webServiceVersion", "160"
+            buildConfigField "String", "passwordHashMss", '"aed11c1b6ff44ffdcc9fbe634bd4c55e8e623415d3b27fc9424f1ea7c425515f"'
+            buildConfigField "String", "modulusBytes", '"2rRVVVFJRbH/wAPDtnwZwu+nxU+AZ6uXxh/sW+AMCBogg7vndZsnRiHoLttYYPqOyOhfgaBOQogrIfrKL4lipK4m52SBzw/FfcM9DsKs/rYR83tBLiIAfgdnVjF27tZID+HJMFTiI30mALjr7+tfp+2lIACXA1RIKTk7S9pDmX8="'
+            buildConfigField "String", "DBytes", '"MM/c18zroJ2Iqi9s5/asvUBF3pjO3NSEbFjFpP/NT6WdKimvECWPz2xT6NlV0Vc6tQaAAmtn7Bt+HPhfVdrA4/ysYVe3/6TWkPjW+bvAhMWu/ZqISx11/jPYSGD9g3ZXgUiqcQM8UbOjlswoq4fpheEXTB0xdVutDLpO3qgHN6k="'
+            buildConfigField "String", "exponentBytes", '"AQAB"'
+            buildConfigField "String", "exponentBytesQrCode", '"VyCgyOTW8mXf3ebTunY0r7fBg3O7KMjWqkqmav8PQP88YmUwNLsJ72L/RPjlykvcozwqqbvXdRC88UMVPSkRQw=="'
+            buildConfigField "String", "modulusBytesQrCode", '"VyCgyOTW8mXf3ebTunY0r7fBg3O7KMjWqkqmav8PQP88YmUwNLsJ72L/RPjlykvcozwqqbvXdRC88UMVPSkRQw=="'
+            buildConfigField "String", "DBytesQrCode", '"GBAW1+T7yG6CaZK6nyDOZEln1Jo98oGlZ9q+I4bV+6kvPtL9PX8In6HjD+U4JgdgfPuO5/PjEOef3CmzLNkKQQ=="'
+            buildConfigField "String", "logincasualbet", '"mssolutions"'
+            buildConfigField "String", "pwdcasualbet", '"w8954l2509MCY1"'
+            buildConfigField "String", "msisdnTest", '"21626807187"'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -31,4 +44,14 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'com.github.santalu:mask-edittext:1.0.9'
+    implementation 'com.chaos.view:pinview:1.4.2'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
+    //implementation 'com.jakewharton:butterknife:10.2.0'
+    //annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
 }

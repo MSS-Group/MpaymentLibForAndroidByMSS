@@ -1,51 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="10dp">
-
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_info_code"
+        android:gravity="center"
         android:orientation="vertical"
-        android:background="#fff"
-        android:padding="10dp">
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/mss"
-        android:layout_gravity="center_horizontal"/>
+        android:padding="@dimen/spacing_large"
+        android:id="@+id/layout_msisdn"
+        android:visibility="visible">
 
-    <EditText
-        android:id="@+id/et_username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/et_username"
-        android:background="@drawable/edittext_style"
-        android:padding="10dp"
-        android:layout_marginTop="10dp"/>
+        <ImageView
+            android:id="@+id/iv_phone_ic"
+            android:layout_width="@dimen/dlg_one_button_icon_size"
+            android:layout_height="@dimen/dlg_one_button_icon_size"
+            android:layout_marginBottom="@dimen/spacing_huge"
+            android:contentDescription="@string/content_description_base_dialog_icon"
+            android:src="@drawable/smartphone"
+            />
 
-    <EditText
-        android:id="@+id/et_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/et_password"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/edittext_style"
-        android:padding="10dp"
-        android:inputType="textPassword"/>
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_normal"
+            android:fontFamily="@string/font_family_medium"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:text="Veuillez saisir le Numéro de téléphone"
+            />
 
-    <Button
-        android:id="@+id/bt_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/bt_login"
-        android:textAllCaps="false"
-        android:background="@drawable/button_style"
-        android:textColor="#fff"
-        android:textSize="16sp"
-        style="?attr/borderlessButtonStyle"/>
+        <com.santalu.widget.MaskEditText
+            android:id="@+id/met_msisdn_device"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_edit_text_add_device"
+            android:layout_centerInParent="true"
+            android:background="@drawable/bg_my_info_input_field"
+            android:gravity="center_vertical|start"
+            android:paddingLeft="17dp"
+            android:paddingRight="17dp"
+            android:textColorHint="@color/redOoredoo"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:inputType="number"
+            android:maxLength="10"
+            android:fontFamily="@font/ooredoobold"
+            android:importantForAccessibility="no"
+            app:met_mask="## ### ###"
+            />
+
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="40.0dip"
+            android:layout_marginTop="10.0dip"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="9.0">
+            <Button
+                android:id="@+id/btn_ok"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="4.2"
+                android:background="@drawable/btn_ok"
+                android:gravity="center"
+                android:text="OK"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:fontFamily="@font/ooredooregular"
+                />
+
+        </LinearLayout>
+
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_info_code"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_large"
+        android:id="@+id/layout_loading"
+        android:visibility="gone">
 
-</LinearLayout>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="@dimen/dlg_one_button_icon_size"
+            android:layout_height="@dimen/dlg_one_button_icon_size"
+            android:layout_marginBottom="@dimen/spacing_huge"
+            android:layout_centerHorizontal="true"
+            android:visibility="visible"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_normal"
+            android:ellipsize="end"
+            android:fontFamily="@string/font_family_medium"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textSize="16sp"
+            android:text="@string/loading_title"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_info_code"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_large"
+        android:id="@+id/layout_otp"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_otp_ic"
+            android:layout_width="@dimen/dlg_one_button_icon_size"
+            android:layout_height="@dimen/dlg_one_button_icon_size"
+            android:layout_marginBottom="@dimen/spacing_normal"
+            android:contentDescription="@string/content_description_base_dialog_icon"
+            android:src="@drawable/sms_otp"
+            android:tint="#ffed1b24"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_normal"
+            android:ellipsize="end"
+            android:fontFamily="@string/font_family_medium"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textSize="16sp"
+            android:text="Veuillez saisir le code OTP"
+            android:textColor="@color/black"/>
+
+        <com.chaos.view.PinView
+            android:id="@+id/pv_otp"
+            style="@style/PinWidget.PinView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/message_3"
+            android:layout_centerHorizontal="true"
+            android:cursorVisible="true"
+            android:fontFamily="@font/ooredooheavy"
+            android:inputType="number"
+            android:textSize="@dimen/size_text_otp_input"
+            app:itemCount="4"
+            app:itemHeight="@dimen/size_item_otp"
+            app:itemRadius="@dimen/pv_pin_view_item_radius"
+            app:itemWidth="@dimen/size_item_otp"
+             />
+
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="40.0dip"
+            android:layout_marginTop="10.0dip"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="9.0">
+            <Button
+                android:id="@+id/btn_otp_ok"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="4.2"
+                android:background="@drawable/btn_ok"
+                android:gravity="center"
+                android:text="OK"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:fontFamily="@font/ooredooregular"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:weightSum="1.0">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0.0dip"
+            android:layout_weight="0.42" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/closeBtn"
+                android:layout_width="50.0dip"
+                android:layout_height="50.0dip"
+                android:layout_gravity="center"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:src="@drawable/icon_close"
+                android:visibility="gone"/>
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_info_code"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_large"
+                android:id="@+id/layout_payment"
+                android:visibility="gone">
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="@dimen/dlg_one_button_icon_size"
+                    android:layout_height="@dimen/dlg_one_button_icon_size"
+                    android:layout_marginBottom="@dimen/spacing_huge"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="gone"
+                    />
+                <ImageView
+                    android:id="@+id/dlg_one_button_iv_icon"
+                    android:layout_width="@dimen/dlg_one_button_icon_size"
+                    android:layout_height="@dimen/dlg_one_button_icon_size"
+                    android:layout_marginBottom="@dimen/spacing_huge"
+                    android:contentDescription="@string/content_description_base_dialog_icon"
+                    android:src="@drawable/wallet"
+                    />
+
+                <TextView
+                    android:id="@+id/dlg_one_button_tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_normal"
+                    android:ellipsize="end"
+                    android:fontFamily="@string/font_family_black"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:textAllCaps="true"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="SUCCESS!"
+                    />
+
+                <TextView
+                    android:id="@+id/dlg_one_button_tv_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_huge"
+                    android:fontFamily="@string/font_family_regular"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textColor="@color/grey_text"
+                    android:textSize="16sp"
+                    android:text="Super success message" />
+
+
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="40.0dip"
+                    android:layout_marginTop="10.0dip"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:weightSum="9.0">
+                    <Button
+                        android:id="@+id/dlg_one_button_btn_ok"
+                        android:layout_width="0.0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4.2"
+                        android:background="@drawable/btn_ok"
+                        android:gravity="center"
+                        android:text="OK"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/white"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/ooredooregular"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_weight="70.0"
+                android:background="@drawable/bg_info_code"
+                android:orientation="vertical"
+                android:weightSum="12.0"
+                android:id="@+id/layout_login"
+                android:visibility="visible">
+                <ImageView
+                    android:id="@+id/dlg_one_button_iv"
+                    android:layout_width="@dimen/dlg_one_button_icon_size"
+                    android:layout_height="@dimen/dlg_one_button_icon_size"
+                    android:contentDescription="@string/content_description_base_dialog_icon"
+                    android:src="@drawable/pwd"
+                    android:layout_gravity="center_horizontal"
+                    />
+                <TextView
+                    android:id="@+id/text_input_popup"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20.0dip"
+                    android:layout_marginTop="20.0dip"
+                    android:layout_marginRight="20.0dip"
+                    android:fontFamily="@font/ooredooregular"
+                    android:textColor="@color/blackOoredoo"
+                    android:text="@string/pin_confirm"
+                    android:textColorHighlight="#ffffffff"
+                    android:textSize="@dimen/size_normal_text" />
+                <TextView
+                    android:id="@+id/text_erreur_pwd"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20.0dip"
+                    android:layout_marginRight="20.0dip"
+                    android:fontFamily="@font/ooredooregular"
+                    android:text="@string/error_5023"
+                    android:textColor="@color/redOoredoo"
+                    android:textColorHighlight="#ffffffff"
+                    android:textSize="@dimen/size_normal_text"
+                    android:visibility="gone"/>
+
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:id="@+id/relative_test"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/relative_input_msisdn"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true">
+
+                        <com.mss.testlib.utils.passcodeview.PassCodeView
+                            android:id="@+id/pass_code_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            app:digit_size="@dimen/digit_size"
+                            app:digit_vertical_padding_bottom="@dimen/padding_digit_vertical_bottom"
+                            app:digits="4"
+                            app:divider_visible="false"
+                            app:empty_drawable="@drawable/dot_password"
+                            app:filled_drawable="@drawable/filled_dot_password"
+                            app:key_text_size="@dimen/key_text_size_final"
+                            />
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="40.0dip"
+                            android:layout_marginTop="@dimen/padding_top_button_login"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:weightSum="9.0">
+                            <Button
+                                android:id="@+id/dlg_one_button_btn_login"
+                                android:layout_width="0.0dip"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="4.2"
+                                android:background="@drawable/btn_ok"
+                                android:gravity="center"
+                                android:text="Valider"
+                                android:textAllCaps="false"
+                                android:textColor="@android:color/white"
+                                android:textSize="20sp"
+                                android:fontFamily="@font/ooredooregular"
+
+                                />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

@@ -3,6 +3,7 @@ package com.mss.msstestlib;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,19 +29,38 @@ public class MainActivity extends AppCompatActivity {
         btGetAmount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tvUserAmout.setText("Your amount is "+UserManager.getUserAmount(etName.getText().toString()));
+                tvUserAmout.setText("Your amount is " + UserManager.getUserAmount(etName.getText().toString()));
             }
         });
+
+        /*btLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UserManager.showPaymentDialog(MainActivity.this,
+                        "348945Y475865",                    //idClient
+                        "39565976545795695", //idClientMobicash
+                        "56956U78Y30U466086086",           //idMerchant
+                        "5690557U07580757U0773",    //idMerchantMobicash
+                        "192035558706770787",//idTransaction
+                        "1.2.1",//idVersion
+                        "sfzshvljefùperfeùlkhveeùojetvbtlhveovejveùpigve",      //token
+                        "10 DT",//amount
+                        new OnLoginClickListener() {
+                            @Override
+                            public void payment(int resultCode, String token) {
+
+                                Log.e("Payment ResultCode =", String.valueOf(resultCode));
+                                Log.e("Payment Token =", token);
+
+                            }
+                        });
+            }
+        });*/
 
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserManager.showLoginDialog(MainActivity.this, new OnLoginClickListener() {
-                    @Override
-                    public void login(String username, String password) {
-                        tvUserInfos.setText("Username = "+username+" Password = "+password);
-                    }
-                });
+                UserManager.showLoginDialog(MainActivity.this,null);
             }
         });
 

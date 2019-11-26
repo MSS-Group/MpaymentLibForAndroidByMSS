@@ -3,4 +3,34 @@
     <string name="et_username">Username</string>
     <string name="et_password">Password</string>
     <string name="bt_login">Login</string>
+
+    <!--Main Activity-->
+    <string name="act_main_title">Android: Creating Custom Dialogs</string>
+    <string name="act_main_message">This is an example of how to create your own dialogs, using a custom style and custom actions.</string>
+    <string name="act_main_success_button_text">Success Dialog</string>
+    <string name="act_main_error_button_text">Error Dialog</string>
+    <string name="act_main_yesno_button_text">Yes/No Dialog</string>
+
+    <!--Payment Dialog-->
+    <string name="payment_title">Paiement !</string>
+    <string name="payment_message">Vous voulez effectuer un paiement d\'un montant de : %1$s ?</string>
+
+    <!--Loading Dialog-->
+    <string name="loading_title">Loading !</string>
+    <string name="loading_message">En cours de paiement ...</string>
+
+
+    <!--Success Dialog-->
+    <string name="success_title">SUCCESS !</string>
+    <string name="success_message">Paiement effectué avec succès.</string>
+    <string name="success_button_text">OK, Cool</string>
+    <string name="content_description_base_dialog_icon">Imagem do Diálogo</string>
+
+    <!--Error Dialog-->
+    <string name="error_title">Error !</string>
+    <string name="error_message">Echec de paiement .</string>
+    <string name="error_button_text">OK, no problem</string>
+    <string name="code_confidentiel">Veuillez saisir votre <u>code confidentiel Mobicash</u></string>
+    <string name="pin_confirm">Veuillez entrer votre Pincode pour confirmer</string>
+    <string name="error_5023">Mot de passe non valide. Veuillez réessayer à nouveau</string>
 </resources>
