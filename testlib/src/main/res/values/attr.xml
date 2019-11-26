@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="PassCodeView">
+    <attr name="digits" format="integer"/>
+    <attr name="filled_drawable" format="reference"/>
+    <attr name="empty_drawable" format="reference"/>
+    <attr name="delete_drawable" format="reference"/>
+    <attr name="digit_size" format="dimension"/>
+    <attr name="key_text_size" format="dimension"/>
+    <attr name="divider_visible" format="boolean"/>
+    <attr name="digit_spacing" format="dimension"/>
+    <attr name="digit_vertical_padding" format="dimension"/>
+    <attr name="digit_vertical_padding_bottom" format="dimension"/>
+  </declare-styleable>
+  <declare-styleable name="CheckView">
+    <attr name="checkView_strokeWidth" format="dimension"/>
+    <attr name="checkView_strokeColor" format="color"/>
+  </declare-styleable>
+  <declare-styleable name="Rotate3dAnimation">
+    <attr name="rollType" format="enum">
+      <enum name="x" value="0"/>
+      <enum name="y" value="1"/>
+      <enum name="z" value="2"/>
+    </attr>
+    <attr name="fromDeg" format="float" />
+    <attr name="toDeg" format="float" />
+    <attr name="pivotX" format="fraction"/>
+    <attr name="pivotY" format="fraction" />
+  </declare-styleable>
+  <attr name="sizeTypoText" format="float">
+  </attr>
+  <attr name="styleTypoText">
+    <enum name="bold" value="2" />
+    <enum name="light" value="3" />
+    <enum name="regular" value="1" />
+  </attr>
+  <attr name="sizeTypo" format="float">
+  </attr>
+  <attr name="styleTypo">
+    <enum name="bold" value="2" />
+    <enum name="light" value="3" />
+    <enum name="regular" value="1" />
+  </attr>
+  <declare-styleable name="CarouselPicker">
+    <attr name="items_visible" />
+  </declare-styleable>
+  <attr name="items_visible" format="enum">
+    <enum name="three" value="3" />
+    <enum name="five" value="5" />
+    <enum name="seven" value="7" />
+  </attr>
+</resources>
