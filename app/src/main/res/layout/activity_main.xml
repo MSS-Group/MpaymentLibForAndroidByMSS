@@ -16,6 +16,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:background="@drawable/red_border_bg"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:textColor="#ed1b24"
         android:text="Get"/>
 
     <EditText
@@ -39,9 +43,14 @@
         android:id="@+id/bt_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/btn_gradient_bg"
+        android:gravity="center"
+        android:text="@string/bt_login"
         android:layout_below="@id/tv_user_amount"
-        android:layout_marginTop="20dp"
-        android:text="Login"/>
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif-medium"/>
 
     <TextView
         android:id="@+id/tv_user_infos"

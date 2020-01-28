@@ -3,22 +3,38 @@ package com.mss.testlib.dialog;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LinearGradient;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import com.chaos.view.PinView;
@@ -26,16 +42,21 @@ import com.mss.testlib.BuildConfig;
 import com.mss.testlib.R;
 import com.mss.testlib.UserManager;
 import com.mss.testlib.data.ApiClient;
+import com.mss.testlib.data.model.Activation;
 import com.mss.testlib.data.model.CheckOtp;
 import com.mss.testlib.data.model.OtpGeneration;
+import com.mss.testlib.data.model.PreActivation;
 import com.mss.testlib.data.model.Token;
+import com.mss.testlib.utils.Shared;
 import com.mss.testlib.utils.encrypt.RSA;
 import com.santalu.widget.MaskEditText;
+import com.timqi.sectorprogressview.ColorfulRingProgressView;
 
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Arrays;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -61,6 +82,9 @@ public class LoginDialog {
     private LinearLayout layoutMsisdn;
     private LinearLayout layoutLoading;
     private LinearLayout layoutOTP;
+    private AppCompatSpinner spNumberPrefix;
+    private AppCompatImageView checkMark;
+    private ColorfulRingProgressView progressBar;
 
     public LoginDialog(Context context) {
         this.context = context;
@@ -80,6 +104,9 @@ public class LoginDialog {
         layoutLoading = v.findViewById(R.id.layout_loading);
         layoutMsisdn = v.findViewById(R.id.layout_msisdn);
         layoutOTP = v.findViewById(R.id.layout_otp);
+        spNumberPrefix = v.findViewById(R.id.sp_number_prefix);
+        checkMark = v.findViewById(R.id.iv_check_mark);
+        progressBar = v.findViewById(R.id.progressBar);
 
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -116,6 +143,54 @@ public class LoginDialog {
                 }
             }
         });
+
+        spNumberPrefix.setAdapter(new ArrayAdapter<String>(context,R.layout.spinner_dropdown_item, Arrays.asList("+216","+212")));
+
+        etMsisdn.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.toString().length() == 10)
+                    checkMark.setVisibility(View.VISIBLE);
+                else
+                    checkMark.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
+        Bitmap myBitmap = ((BitmapDrawable)checkMark.getDrawable()).getBitmap();
+        Bitmap newBitmap = addGradient(myBitmap);
+        checkMark.setImageDrawable(new BitmapDrawable(context.getResources(), newBitmap));
+
+        progressBar.animateIndeterminate();
+    }
+
+
+
+    public Bitmap addGradient(Bitmap originalBitmap) {
+        int width = originalBitmap.getWidth();
+        int height = originalBitmap.getHeight();
+        Bitmap updatedBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(updatedBitmap);
+
+        canvas.drawBitmap(originalBitmap, 0, 0, null);
+
+        Paint paint = new Paint();
+        LinearGradient shader = new LinearGradient(0, 0, 0, height, Color.parseColor("#33d49e"), Color.parseColor("#17a374"), Shader.TileMode.CLAMP);
+        paint.setShader(shader);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawRect(0, 0, width, height, paint);
+
+        return updatedBitmap;
     }
 
     public void show(){
@@ -141,26 +216,26 @@ public class LoginDialog {
             }
         }, 5000);*/
         ApiClient.getApiServices()
-                .generateOtp("216"+etMsisdn.getRawText(),"352085032057236","22222229999990000112","C","Mobicash","Inscription")
+                .preActivation("216"+etMsisdn.getRawText(),"352085032057236","22222229999990000112","C")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<OtpGeneration>() {
+                .subscribe(new SingleObserver<PreActivation>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onSuccess(OtpGeneration otpGeneration) {
+                    public void onSuccess(PreActivation preActivation) {
                         layoutLoading.setVisibility(View.GONE);
-                        String resultCode = otpGeneration.getResultCode();
-                        if (resultCode.equals("000")){
+                        String resultCode = preActivation.getResultCode();
+                        if (resultCode.equals("0")){
                             if (BuildConfig.DEBUG) {
-                                Toast.makeText(context, "OTP : " + otpGeneration.getIdTransaction(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, "OTP : " + preActivation.getIdTransaction(), Toast.LENGTH_LONG).show();
                                 layoutOTP.setVisibility(View.VISIBLE);
                             }
                         }else {
-                            Toast.makeText(context, "Une erreur est survenue ", Toast.LENGTH_LONG).show();
+                            Shared.CheckError(context,resultCode);
                             layoutMsisdn.setVisibility(View.VISIBLE);
                         }
                     }
@@ -186,31 +261,31 @@ public class LoginDialog {
         }, 5000);*/
         try {
             ApiClient.getApiServices().token("352085032057236", RSA.Encrypt("216" + etMsisdn.getRawText()))
-                    .flatMap(new Function<Token, SingleSource<CheckOtp>>() {
+                    .flatMap(new Function<Token, SingleSource<Activation>>() {
                         @Override
-                        public SingleSource<CheckOtp> apply(Token token1) throws Exception {
+                        public SingleSource<Activation> apply(Token token1) throws Exception {
                             String token = token1.getAccessToken();
                             return ApiClient.getApiServices()
-                                    .checkOtp("216"+etMsisdn.getRawText(),"352085032057236","22222229999990000112","C","Mobicash",pvOTP.getText().toString(),token);
+                                    .activation("216"+etMsisdn.getRawText(),"352085032057236","22222229999990000112","C",pvOTP.getText().toString(),token);
                         }
                     })
 
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new SingleObserver<CheckOtp>() {
+                    .subscribe(new SingleObserver<Activation>() {
                         @Override
                         public void onSubscribe(Disposable d) {
 
                         }
 
                         @Override
-                        public void onSuccess(CheckOtp checkOtp) {
+                        public void onSuccess(Activation activation) {
                             layoutLoading.setVisibility(View.GONE);
-                            String resultCode = checkOtp.getResultCode();
-                            if (resultCode.equals("000")){
+                            String resultCode = activation.getResultCode();
+                            if (Integer.valueOf(resultCode) == 0){
                                 toPayment();
                             }else {
-                                Toast.makeText(context, "Une erreur est survenue ", Toast.LENGTH_LONG).show();
+                                Shared.CheckError(context,resultCode);
                                 layoutMsisdn.setVisibility(View.VISIBLE);
                             }
                         }

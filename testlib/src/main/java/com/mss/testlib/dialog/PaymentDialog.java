@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.mss.testlib.R;
 import com.mss.testlib.utils.passcodeview.PassCodeView;
+import com.timqi.sectorprogressview.ColorfulRingProgressView;
 
 public class PaymentDialog {
 
@@ -36,7 +37,7 @@ public class PaymentDialog {
     private TextView dlg_one_button_tv_title, dlg_one_button_tv_message;
     private Button dlg_one_button_btn_ok, dlg_one_button_btn_login;
     private Dialog loginDialog;
-    private ProgressBar progressBar;
+    private ColorfulRingProgressView progressBar;
     private OnLoginClickListener onLoginClickListener;
     private static final double DIALOG_WINDOW_WIDTH = 0.85;
     private PassCodeView passCodeView;
@@ -65,7 +66,6 @@ public class PaymentDialog {
         dlg_one_button_tv_title = loginDialog.findViewById(R.id.dlg_one_button_tv_title);
         dlg_one_button_tv_message = loginDialog.findViewById(R.id.dlg_one_button_tv_message);
         passCodeView = loginDialog.findViewById(R.id.pass_code_view);
-        dlg_one_button_tv_title.setTextColor(context.getResources().getColor(R.color.zxing_possible_result_points));
         dlg_one_button_tv_title.setText(context.getResources().getString(R.string.payment_title));
         dlg_one_button_tv_message.setText(context.getResources().getString(R.string.payment_message,amount));
         progressBar = loginDialog.findViewById(R.id.progressBar);
@@ -90,13 +90,13 @@ public class PaymentDialog {
 
                     if (state == 1) {
                         loading(state);
-                        dlg_one_button_iv_icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_checked));
+                        dlg_one_button_iv_icon.setImageDrawable(context.getResources().getDrawable(R.drawable.icon5));
                         onLoginClickListener.payment(1, "sfzshvljefùperfeùlkhveeùojetvbtlhveovejveùpigve");
                         state++;
                     } else if (state == 2) {
                         //loading(state);
                         loading(state);
-                        dlg_one_button_iv_icon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_close));
+                        dlg_one_button_iv_icon.setImageDrawable(context.getResources().getDrawable(R.drawable.icon6));
                         onLoginClickListener.payment(1, "sfzshvljefùperfeùlkhveeùojetvbtlhveovejveùpigve");
                         state++;
                     } /*else if (state == 2) {
@@ -107,6 +107,8 @@ public class PaymentDialog {
                 }
             }
         });
+
+        progressBar.animateIndeterminate();
     }
 
     public void show() {
@@ -139,7 +141,6 @@ public class PaymentDialog {
     }
 
     private void loading(final int state) {
-        dlg_one_button_tv_title.setTextColor(context.getResources().getColor(R.color.zxing_possible_result_points));
         dlg_one_button_tv_title.setText(context.getResources().getString(R.string.loading_title));
         dlg_one_button_tv_message.setText(context.getResources().getString(R.string.loading_message));
         if (state == 0)
@@ -162,18 +163,15 @@ public class PaymentDialog {
     private void disLoading(int state) {
         switch (state) {
             case 0:
-                dlg_one_button_tv_title.setTextColor(context.getResources().getColor(R.color.zxing_possible_result_points));
                 dlg_one_button_tv_title.setText(context.getResources().getString(R.string.payment_title));
                 dlg_one_button_tv_message.setText(context.getResources().getString(R.string.payment_message,amount));
                 dlg_one_button_tv_message.setVisibility(View.VISIBLE);
                 break;
             case 1:
-                dlg_one_button_tv_title.setTextColor(context.getResources().getColor(R.color.green_500));
                 dlg_one_button_tv_title.setText(context.getResources().getString(R.string.success_title));
                 dlg_one_button_tv_message.setText(context.getResources().getString(R.string.success_message));
                 break;
             case 2:
-                dlg_one_button_tv_title.setTextColor(context.getResources().getColor(R.color.red_500));
                 dlg_one_button_tv_title.setText(context.getResources().getString(R.string.error_title));
                 dlg_one_button_tv_message.setText(context.getResources().getString(R.string.error_message));
                 break;

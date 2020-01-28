@@ -32,8 +32,7 @@
                 android:src="@drawable/icon_close"
                 android:visibility="gone"/>
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -44,48 +43,46 @@
                 android:id="@+id/layout_payment"
                 android:visibility="gone">
 
-                <ProgressBar
+                <com.timqi.sectorprogressview.ColorfulRingProgressView
                     android:id="@+id/progressBar"
-                    style="?android:attr/progressBarStyleLarge"
                     android:layout_width="@dimen/dlg_one_button_icon_size"
                     android:layout_height="@dimen/dlg_one_button_icon_size"
-                    android:layout_marginBottom="@dimen/spacing_huge"
-                    android:layout_centerHorizontal="true"
-                    android:visibility="gone"
-                    />
+                    app:bgColor="#f9d3c6"
+                    app:fgColorEnd="#fa3039"
+                    app:fgColorStart="#ed1b24"
+                    app:percent="25"
+                    app:startAngle="0"
+                    app:strokeWidth="10dp" />
                 <ImageView
                     android:id="@+id/dlg_one_button_iv_icon"
                     android:layout_width="@dimen/dlg_one_button_icon_size"
                     android:layout_height="@dimen/dlg_one_button_icon_size"
-                    android:layout_marginBottom="@dimen/spacing_huge"
                     android:contentDescription="@string/content_description_base_dialog_icon"
-                    android:src="@drawable/wallet"
+                    android:src="@drawable/icon4"
                     />
 
                 <TextView
                     android:id="@+id/dlg_one_button_tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/spacing_normal"
                     android:ellipsize="end"
-                    android:fontFamily="@string/font_family_black"
+                    android:layout_marginTop="10.0dip"
+                    android:fontFamily="sans-serif-medium"
                     android:gravity="center"
                     android:maxLines="1"
-                    android:textAllCaps="true"
+                    android:textAllCaps="false"
                     android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:text="SUCCESS!"
-                    />
+                    android:textColor="#000026"/>
 
                 <TextView
                     android:id="@+id/dlg_one_button_tv_message"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/spacing_huge"
-                    android:fontFamily="@string/font_family_regular"
+                    android:fontFamily="sans-serif-medium"
+                    android:layout_marginTop="@dimen/margin10"
                     android:gravity="center"
                     android:textAlignment="center"
-                    android:textColor="@color/grey_text"
+                    android:textColor="#626262"
                     android:textSize="16sp"
                     android:text="Super success message" />
 
@@ -94,7 +91,7 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="40.0dip"
-                    android:layout_marginTop="10.0dip"
+                    android:layout_marginTop="15.0dip"
                     android:orientation="horizontal"
                     android:gravity="center"
                     android:weightSum="9.0">
@@ -102,14 +99,14 @@
                         android:id="@+id/dlg_one_button_btn_ok"
                         android:layout_width="0.0dip"
                         android:layout_height="wrap_content"
-                        android:layout_weight="4.2"
-                        android:background="@drawable/btn_ok"
+                        android:layout_weight="8"
+                        android:background="@drawable/btn_gradient_bg"
                         android:gravity="center"
-                        android:text="OK"
+                        android:text="Ok"
                         android:textAllCaps="false"
                         android:textColor="@android:color/white"
                         android:textSize="20sp"
-                        android:fontFamily="@font/ooredooregular"
+                        android:fontFamily="sans-serif-medium"
                         />
 
                 </LinearLayout>
@@ -130,21 +127,51 @@
                     android:layout_width="@dimen/dlg_one_button_icon_size"
                     android:layout_height="@dimen/dlg_one_button_icon_size"
                     android:contentDescription="@string/content_description_base_dialog_icon"
-                    android:src="@drawable/pwd"
+                    android:src="@drawable/icon3"
                     android:layout_gravity="center_horizontal"
                     />
+                <TextView
+                    android:id="@+id/tv_lbl_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:textSize="20sp"
+                    android:textColor="#000026"
+                    android:text="Pincode"
+                    android:layout_gravity="center_horizontal"/>
+
                 <TextView
                     android:id="@+id/text_input_popup"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20.0dip"
-                    android:layout_marginTop="20.0dip"
-                    android:layout_marginRight="20.0dip"
-                    android:fontFamily="@font/ooredooregular"
-                    android:textColor="@color/blackOoredoo"
+                    android:layout_marginLeft="15.0dip"
+                    android:layout_marginRight="15.0dip"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:textColor="#626262"
                     android:text="@string/pin_confirm"
-                    android:textColorHighlight="#ffffffff"
                     android:textSize="@dimen/size_normal_text" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_horizontal">
+
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/mss_logo"/>
+                    <ImageView
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ooredoo_logo"/>
+
+                </LinearLayout>
+
                 <TextView
                     android:id="@+id/text_erreur_pwd"
                     android:layout_width="fill_parent"
@@ -154,7 +181,6 @@
                     android:fontFamily="@font/ooredooregular"
                     android:text="@string/error_5023"
                     android:textColor="@color/redOoredoo"
-                    android:textColorHighlight="#ffffffff"
                     android:textSize="@dimen/size_normal_text"
                     android:visibility="gone"/>
 
@@ -198,16 +224,14 @@
                                 android:id="@+id/dlg_one_button_btn_login"
                                 android:layout_width="0.0dip"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="4.2"
-                                android:background="@drawable/btn_ok"
+                                android:layout_weight="7.5"
+                                android:background="@drawable/btn_gradient_bg"
                                 android:gravity="center"
                                 android:text="Valider"
                                 android:textAllCaps="false"
                                 android:textColor="@android:color/white"
                                 android:textSize="20sp"
-                                android:fontFamily="@font/ooredooregular"
-
-                                />
+                                android:fontFamily="sans-serif-medium"/>
 
                         </LinearLayout>
 
