@@ -3,11 +3,9 @@ package com.mss.testlib.dialog;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -15,7 +13,6 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -27,14 +24,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatSpinner;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import com.chaos.view.PinView;
@@ -43,10 +39,9 @@ import com.mss.testlib.R;
 import com.mss.testlib.UserManager;
 import com.mss.testlib.data.ApiClient;
 import com.mss.testlib.data.model.Activation;
-import com.mss.testlib.data.model.CheckOtp;
-import com.mss.testlib.data.model.OtpGeneration;
 import com.mss.testlib.data.model.PreActivation;
 import com.mss.testlib.data.model.Token;
+import com.mss.testlib.utils.IdentificationGenerator;
 import com.mss.testlib.utils.Shared;
 import com.mss.testlib.utils.encrypt.RSA;
 import com.santalu.widget.MaskEditText;
@@ -73,7 +68,7 @@ public class LoginDialog {
 
     private Context context;
     private Dialog loginDialog;
-    private OnLoginClickListener onLoginClickListener;
+    private PaymentCallback paymentCallback;
     private TextView tvTitle;
     private Button btOk;
     private Button btOkOTP;
@@ -85,6 +80,7 @@ public class LoginDialog {
     private AppCompatSpinner spNumberPrefix;
     private AppCompatImageView checkMark;
     private ColorfulRingProgressView progressBar;
+    private ImageView ivClose;
 
     public LoginDialog(Context context) {
         this.context = context;
@@ -107,7 +103,14 @@ public class LoginDialog {
         spNumberPrefix = v.findViewById(R.id.sp_number_prefix);
         checkMark = v.findViewById(R.id.iv_check_mark);
         progressBar = v.findViewById(R.id.progressBar);
+        ivClose = v.findViewById(R.id.iv_close);
 
+        ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginDialog.dismiss();
+            }
+        });
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         Window window = loginDialog.getWindow();
@@ -197,8 +200,8 @@ public class LoginDialog {
         loginDialog.show();
     }
 
-    public void setOnLoginClickListener(OnLoginClickListener onLoginClickListener) {
-        this.onLoginClickListener = onLoginClickListener;
+    public void setPaymentCallback(PaymentCallback paymentCallback) {
+        this.paymentCallback = paymentCallback;
     }
 
     private boolean isEmpty(EditText editText){
@@ -206,17 +209,12 @@ public class LoginDialog {
     }
 
     private void loadingToOTP() {
+        IdentificationGenerator id = new IdentificationGenerator(context);
         layoutMsisdn.setVisibility(View.GONE);
         layoutLoading.setVisibility(View.VISIBLE);
-        /*final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                toOTP();
-            }
-        }, 5000);*/
+        ivClose.setVisibility(View.GONE);
         ApiClient.getApiServices()
-                .preActivation("216"+etMsisdn.getRawText(),"352085032057236","22222229999990000112","C")
+                .preActivation("216"+etMsisdn.getRawText(),id.getIMEI(),id.getIdSession(etMsisdn.getRawText()),"C")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<PreActivation>() {
@@ -228,6 +226,7 @@ public class LoginDialog {
                     @Override
                     public void onSuccess(PreActivation preActivation) {
                         layoutLoading.setVisibility(View.GONE);
+                        ivClose.setVisibility(View.VISIBLE);
                         String resultCode = preActivation.getResultCode();
                         if (resultCode.equals("0")){
                             if (BuildConfig.DEBUG) {
@@ -235,13 +234,14 @@ public class LoginDialog {
                                 layoutOTP.setVisibility(View.VISIBLE);
                             }
                         }else {
-                            Shared.CheckError(context,resultCode);
+                            Toast.makeText(context, Shared.CheckError(context,resultCode), Toast.LENGTH_LONG).show();
                             layoutMsisdn.setVisibility(View.VISIBLE);
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        ivClose.setVisibility(View.VISIBLE);
                         layoutLoading.setVisibility(View.GONE);
                         Toast.makeText(context, "Une erreur est survenue ", Toast.LENGTH_LONG).show();
                         layoutMsisdn.setVisibility(View.VISIBLE);
@@ -250,23 +250,20 @@ public class LoginDialog {
     }
 
     private void loadingToPayment() {
+        final IdentificationGenerator id = new IdentificationGenerator(context);
         layoutOTP.setVisibility(View.GONE);
         layoutLoading.setVisibility(View.VISIBLE);
-        /*final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                toPayment();
-            }
-        }, 5000);*/
+        ivClose.setVisibility(View.GONE);
+        final String otp = pvOTP.getText().toString();
+        pvOTP.setText("");
         try {
-            ApiClient.getApiServices().token("352085032057236", RSA.Encrypt("216" + etMsisdn.getRawText()))
+            ApiClient.getApiServices().token(id.getIMEI(), RSA.Encrypt("216" + etMsisdn.getRawText()))
                     .flatMap(new Function<Token, SingleSource<Activation>>() {
                         @Override
                         public SingleSource<Activation> apply(Token token1) throws Exception {
                             String token = token1.getAccessToken();
                             return ApiClient.getApiServices()
-                                    .activation("216"+etMsisdn.getRawText(),"352085032057236","22222229999990000112","C",pvOTP.getText().toString(),token);
+                                    .activation("216"+etMsisdn.getRawText(),id.getIMEI(),id.getIdSession(etMsisdn.getRawText()),"C",otp,token);
                         }
                     })
 
@@ -281,17 +278,19 @@ public class LoginDialog {
                         @Override
                         public void onSuccess(Activation activation) {
                             layoutLoading.setVisibility(View.GONE);
+                            ivClose.setVisibility(View.VISIBLE);
                             String resultCode = activation.getResultCode();
                             if (Integer.valueOf(resultCode) == 0){
                                 toPayment();
                             }else {
-                                Shared.CheckError(context,resultCode);
+                                Toast.makeText(context, Shared.CheckError(context,resultCode), Toast.LENGTH_LONG).show();
                                 layoutMsisdn.setVisibility(View.VISIBLE);
                             }
                         }
 
                         @Override
                         public void onError(Throwable e) {
+                            ivClose.setVisibility(View.VISIBLE);
                             layoutLoading.setVisibility(View.GONE);
                             Toast.makeText(context, "Une erreur est survenue ", Toast.LENGTH_LONG).show();
                             layoutMsisdn.setVisibility(View.VISIBLE);
@@ -318,23 +317,16 @@ public class LoginDialog {
     private void toPayment() {
         loginDialog.dismiss();
         UserManager.showPaymentDialog(context,
-                "348945Y475865",                    //idClient
+                etMsisdn.getRawText(),
+                "21633225580",                    //idClient
                 "39565976545795695", //idClientMobicash
                 "56956U78Y30U466086086",           //idMerchant
                 "5690557U07580757U0773",    //idMerchantMobicash
                 "192035558706770787",//idTransaction
                 "1.2.1",//idVersion
                 "sfzshvljefùperfeùlkhveeùojetvbtlhveovejveùpigve",      //token
-                "10 DT",//amount
-                new OnLoginClickListener() {
-                    @Override
-                    public void payment(int resultCode, String token) {
-
-                        Log.e("Payment ResultCode =", String.valueOf(resultCode));
-                        Log.e("Payment Token =", token);
-
-                    }
-                });
+                "10000",//amount
+                 paymentCallback);
     }
     public void hideKeyboard() {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);

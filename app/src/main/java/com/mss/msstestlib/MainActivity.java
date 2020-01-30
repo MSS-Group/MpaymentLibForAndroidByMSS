@@ -8,12 +8,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mss.testlib.UserManager;
-import com.mss.testlib.dialog.OnLoginClickListener;
+import com.mss.testlib.dialog.PaymentCallback;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                         "1.2.1",//idVersion
                         "sfzshvljefùperfeùlkhveeùojetvbtlhveovejveùpigve",      //token
                         "10 DT",//amount
-                        new OnLoginClickListener() {
+                        new PaymentCallback() {
                             @Override
                             public void payment(int resultCode, String token) {
 
@@ -60,7 +61,12 @@ public class MainActivity extends AppCompatActivity {
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserManager.showLoginDialog(MainActivity.this,null);
+                UserManager.showLoginDialog(MainActivity.this, new PaymentCallback() {
+                    @Override
+                    public void payment(int resultCode, String message) {
+                        Log.e(TAG,"resultCode : "+resultCode+"\n Message : "+message);
+                    }
+                });
             }
         });
 

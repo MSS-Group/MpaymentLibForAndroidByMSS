@@ -1,8 +1,8 @@
 package com.mss.testlib.dialog;
 
-public interface OnLoginClickListener {
+public interface PaymentCallback {
 
     //void login(String username,String password);
 
-    void payment(int resultCode,String token);
+    void payment(int resultCode,String message);
 }

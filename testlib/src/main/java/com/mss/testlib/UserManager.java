@@ -3,7 +3,7 @@ package com.mss.testlib;
 import android.content.Context;
 
 import com.mss.testlib.dialog.LoginDialog;
-import com.mss.testlib.dialog.OnLoginClickListener;
+import com.mss.testlib.dialog.PaymentCallback;
 import com.mss.testlib.dialog.PaymentDialog;
 
 public class UserManager {
@@ -18,15 +18,15 @@ public class UserManager {
     }
 
 
-    public static void showLoginDialog(Context context, OnLoginClickListener onLoginClickListener){
+    public static void showLoginDialog(Context context, PaymentCallback paymentCallback){
         LoginDialog loginDialog = new LoginDialog(context);
-        loginDialog.setOnLoginClickListener(onLoginClickListener);
+        loginDialog.setPaymentCallback(paymentCallback);
         loginDialog.show();
     }
 
-    public static void showPaymentDialog(Context context,String idClient ,String idClientMobicash,String idMerchant ,String idMerchantMobicash,String idTransaction,String idVersion,String token,String amount, OnLoginClickListener onLoginClickListener){
-        PaymentDialog loginDialog = new PaymentDialog(context,amount);
-        loginDialog.setOnLoginClickListener(onLoginClickListener);
+    public static void showPaymentDialog(Context context,String msisdn,String idClient ,String idClientMobicash,String idMerchant ,String idMerchantMobicash,String idTransaction,String idVersion,String token,String amount, PaymentCallback paymentCallback){
+        PaymentDialog loginDialog = new PaymentDialog(context,msisdn,idClient,amount);
+        loginDialog.setPaymentCallback(paymentCallback);
         loginDialog.show();
     }
 }

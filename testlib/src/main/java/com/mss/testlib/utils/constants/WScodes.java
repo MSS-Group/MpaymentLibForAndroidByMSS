@@ -1,4 +1,4 @@
-package com.mss.testlib.utils;
+package com.mss.testlib.utils.constants;
 
 public class WScodes {
     public static String BD_OK_USSD ="000";
@@ -8,6 +8,7 @@ public class WScodes {
     public static String MSISDN_Incorrect="013";
     public static String Erreur_Format_RF = "017";
     public static String MSISDN_inexistant="111";
+    public static String Client_inexistant="32";
     public static String MSISDN_Bloqué="141";
     public static String MSISDN_Désinscrit="140";
     public static String CB_DEJA_UTILISER="145";
@@ -91,6 +92,9 @@ public class WScodes {
     public static String Erreur_Bin_P_NonAccepte_Receiver = "508";
     public static String Erreur_Bin_P_NonCo_brandé_Receiver = "509";
     public static String Erreur_Bin_P_Inexistant_Receiver = "510";
+    public static String Erreur_Credit = "511";
+    public static String Erreur_Debit = "512";
+    public static String Erreur_Transaction_annulee = "513";
 
 
 }

@@ -122,6 +122,15 @@
                 android:weightSum="12.0"
                 android:id="@+id/layout_login"
                 android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/iv_close"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="end"
+                    android:src="@drawable/close"
+                    android:layout_margin="10dp"/>
+
                 <ImageView
                     android:id="@+id/dlg_one_button_iv"
                     android:layout_width="@dimen/dlg_one_button_icon_size"

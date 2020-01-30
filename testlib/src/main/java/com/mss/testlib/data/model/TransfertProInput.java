@@ -36,6 +36,19 @@ public class TransfertProInput {
     @Expose
     private String token;
 
+    public TransfertProInput(String mSISDN, String mSISDNReceiverPro, String iMEI, String idSession, String pwd, String amount, String receiverSrvc, String typeOperation, String source, String token) {
+        this.mSISDN = mSISDN;
+        this.mSISDNReceiverPro = mSISDNReceiverPro;
+        this.iMEI = iMEI;
+        this.idSession = idSession;
+        this.pwd = pwd;
+        this.amount = amount;
+        this.receiverSrvc = receiverSrvc;
+        this.typeOperation = typeOperation;
+        this.source = source;
+        this.token = token;
+    }
+
     public String getMSISDN() {
         return mSISDN;
     }
