@@ -43,6 +43,7 @@ import com.mss.testlib.data.model.PreActivation;
 import com.mss.testlib.data.model.Token;
 import com.mss.testlib.utils.IdentificationGenerator;
 import com.mss.testlib.utils.Shared;
+import com.mss.testlib.utils.constants.PaymentResult;
 import com.mss.testlib.utils.encrypt.RSA;
 import com.santalu.widget.MaskEditText;
 import com.timqi.sectorprogressview.ColorfulRingProgressView;
@@ -108,6 +109,7 @@ public class LoginDialog {
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                paymentCallback.payment(PaymentResult.CANCELED,"Opération annulée");
                 loginDialog.dismiss();
             }
         });

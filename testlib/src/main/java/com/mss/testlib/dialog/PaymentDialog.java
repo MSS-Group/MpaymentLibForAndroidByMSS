@@ -134,6 +134,7 @@ public class PaymentDialog {
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                paymentCallback.payment(PaymentResult.CANCELED,"Opération annulée");
                 loginDialog.dismiss();
             }
         });
@@ -293,7 +294,6 @@ public class PaymentDialog {
                         public void onSuccess(Authentification authentification) {
                             String resultCode = authentification.getResultCode();
                             if (Integer.valueOf(resultCode) == 0) {
-                                paymentCallback.payment(Integer.valueOf(resultCode), "sfzshvljefùperfeùlkhveeùojetvbtlhveovejveùpigve");
                                 disLoading(state);
                                 state++;
                             } else {
