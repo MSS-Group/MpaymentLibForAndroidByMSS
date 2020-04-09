@@ -36,8 +36,10 @@ public class ApiClient {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = getUnsafeOkHttpClient()
-                .addInterceptor(logging)
                 .build();
+        /*OkHttpClient client = getUnsafeOkHttpClient()
+                .addInterceptor(logging)
+                .build();*/
 
         Retrofit retrofit = new Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

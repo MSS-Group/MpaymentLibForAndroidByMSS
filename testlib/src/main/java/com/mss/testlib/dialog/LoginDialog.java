@@ -82,15 +82,24 @@ public class LoginDialog {
     private AppCompatImageView checkMark;
     private ColorfulRingProgressView progressBar;
     private ImageView ivClose;
+    private String msisdn, idClient, idClientMobicash, idMerchant, idMerchantMobicash, idTransaction, idVersion, token, amount;
 
-    public LoginDialog(Context context) {
+    public LoginDialog(Context context, final String idClient, final String idClientMobicash, final String idMerchant, final String idMerchantMobicash, final String idTransaction, final String idVersion, final String token, final String amount) {
         this.context = context;
+        this.idClient = idClient;
+        this.idClientMobicash = idClientMobicash;
+        this.idMerchant = idMerchant;
+        this.idMerchantMobicash = idMerchantMobicash;
+        this.idTransaction = idTransaction;
+        this.idVersion = idVersion;
+        this.token = token;
+        this.amount = amount;
         init();
     }
 
     private void init() {
         loginDialog = new Dialog(context);
-        View v = LayoutInflater.from(context).inflate(R.layout.dialog_login,null);
+        View v = LayoutInflater.from(context).inflate(R.layout.dialog_login, null);
         loginDialog.setContentView(v);
         loginDialog.setCancelable(false);
         etMsisdn = v.findViewById(R.id.met_msisdn_device);
@@ -109,7 +118,7 @@ public class LoginDialog {
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                paymentCallback.payment(PaymentResult.CANCELED,"Opération annulée");
+                paymentCallback.payment(PaymentResult.CANCELED, "Opération annulée");
                 loginDialog.dismiss();
             }
         });
@@ -129,10 +138,18 @@ public class LoginDialog {
             public void onClick(View view) {
                 hideKeyboard();
                 if (isEmpty(etMsisdn) || etMsisdn.getRawText().length() < 8)
-                    Toast.makeText(context,"Veuillez saisir le numéro de téléphone",Toast.LENGTH_SHORT).show();
-                else
-                {
-                    loadingToOTP();
+                    Toast.makeText(context, "Veuillez saisir le numéro de téléphone", Toast.LENGTH_SHORT).show();
+                else {
+                    loadingToOTP(context,
+                            etMsisdn.getRawText(),
+                            idClient,
+                            idClientMobicash,
+                            idMerchant,
+                            idMerchantMobicash,
+                            idTransaction,
+                            idVersion,
+                            token,
+                            amount);
                 }
             }
         });
@@ -141,15 +158,24 @@ public class LoginDialog {
             @Override
             public void onClick(View view) {
                 hideKeyboard();
-                if (isEmpty(pvOTP) || pvOTP.getText().length()<4)
-                    Toast.makeText(context,"Veuillez saisir le code OTP",Toast.LENGTH_SHORT).show();
+                if (isEmpty(pvOTP) || pvOTP.getText().length() < 4)
+                    Toast.makeText(context, "Veuillez saisir le code OTP", Toast.LENGTH_SHORT).show();
                 else {
-                    loadingToPayment();
+                    loadingToPayment(context,
+                            msisdn,
+                            idClient,
+                            idClientMobicash,
+                            idMerchant,
+                            idMerchantMobicash,
+                            idTransaction,
+                            idVersion,
+                            token,
+                            amount);
                 }
             }
         });
 
-        spNumberPrefix.setAdapter(new ArrayAdapter<String>(context,R.layout.spinner_dropdown_item, Arrays.asList("+216","+212")));
+        spNumberPrefix.setAdapter(new ArrayAdapter<String>(context, R.layout.spinner_dropdown_item, Arrays.asList("+216")));
 
         etMsisdn.addTextChangedListener(new TextWatcher() {
             @Override
@@ -172,13 +198,12 @@ public class LoginDialog {
         });
 
 
-        Bitmap myBitmap = ((BitmapDrawable)checkMark.getDrawable()).getBitmap();
+        /*Bitmap myBitmap = ((BitmapDrawable) checkMark.getDrawable()).getBitmap();
         Bitmap newBitmap = addGradient(myBitmap);
-        checkMark.setImageDrawable(new BitmapDrawable(context.getResources(), newBitmap));
+        checkMark.setImageDrawable(new BitmapDrawable(context.getResources(), newBitmap));*/
 
         progressBar.animateIndeterminate();
     }
-
 
 
     public Bitmap addGradient(Bitmap originalBitmap) {
@@ -198,7 +223,7 @@ public class LoginDialog {
         return updatedBitmap;
     }
 
-    public void show(){
+    public void show() {
         loginDialog.show();
     }
 
@@ -206,17 +231,17 @@ public class LoginDialog {
         this.paymentCallback = paymentCallback;
     }
 
-    private boolean isEmpty(EditText editText){
-       return editText.getText().toString().length() == 0;
+    private boolean isEmpty(EditText editText) {
+        return editText.getText().toString().length() == 0;
     }
 
-    private void loadingToOTP() {
+    private void loadingToOTP(final Context context, final String msisdn, final String idClient, final String idClientMobicash, final String idMerchant, final String idMerchantMobicash, final String idTransaction, final String idVersion, final String token, final String amount) {
         IdentificationGenerator id = new IdentificationGenerator(context);
         layoutMsisdn.setVisibility(View.GONE);
         layoutLoading.setVisibility(View.VISIBLE);
         ivClose.setVisibility(View.GONE);
         ApiClient.getApiServices()
-                .preActivation("216"+etMsisdn.getRawText(),id.getIMEI(),id.getIdSession(etMsisdn.getRawText()),"C")
+                .preActivation("216" + msisdn, id.getIMEI(), id.getIdSession(etMsisdn.getRawText()), "C")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<PreActivation>() {
@@ -230,13 +255,14 @@ public class LoginDialog {
                         layoutLoading.setVisibility(View.GONE);
                         ivClose.setVisibility(View.VISIBLE);
                         String resultCode = preActivation.getResultCode();
-                        if (resultCode.equals("0")){
-                            if (BuildConfig.DEBUG) {
+                        if (resultCode.equals("0")) {
+                            setMsisdn(msisdn);
+                            //if (BuildConfig.DEBUG) {
                                 Toast.makeText(context, "OTP : " + preActivation.getIdTransaction(), Toast.LENGTH_LONG).show();
-                                layoutOTP.setVisibility(View.VISIBLE);
-                            }
-                        }else {
-                            Toast.makeText(context, Shared.CheckError(context,resultCode), Toast.LENGTH_LONG).show();
+                            //}
+                            layoutOTP.setVisibility(View.VISIBLE);
+                        } else {
+                            Toast.makeText(context, Shared.CheckError(context, resultCode), Toast.LENGTH_LONG).show();
                             layoutMsisdn.setVisibility(View.VISIBLE);
                         }
                     }
@@ -251,7 +277,7 @@ public class LoginDialog {
                 });
     }
 
-    private void loadingToPayment() {
+    private void loadingToPayment(final Context context, final String msisdn, final String idClient, final String idClientMobicash, final String idMerchant, final String idMerchantMobicash, final String idTransaction, final String idVersion, final String token, final String amount) {
         final IdentificationGenerator id = new IdentificationGenerator(context);
         layoutOTP.setVisibility(View.GONE);
         layoutLoading.setVisibility(View.VISIBLE);
@@ -259,13 +285,13 @@ public class LoginDialog {
         final String otp = pvOTP.getText().toString();
         pvOTP.setText("");
         try {
-            ApiClient.getApiServices().token(id.getIMEI(), RSA.Encrypt("216" + etMsisdn.getRawText()))
+            ApiClient.getApiServices().token(id.getIMEI(), RSA.Encrypt("216" + msisdn))
                     .flatMap(new Function<Token, SingleSource<Activation>>() {
                         @Override
                         public SingleSource<Activation> apply(Token token1) throws Exception {
                             String token = token1.getAccessToken();
                             return ApiClient.getApiServices()
-                                    .activation("216"+etMsisdn.getRawText(),id.getIMEI(),id.getIdSession(etMsisdn.getRawText()),"C",otp,token);
+                                    .activation("216" + msisdn, id.getIMEI(), id.getIdSession(msisdn), "C", otp, token);
                         }
                     })
 
@@ -282,10 +308,24 @@ public class LoginDialog {
                             layoutLoading.setVisibility(View.GONE);
                             ivClose.setVisibility(View.VISIBLE);
                             String resultCode = activation.getResultCode();
-                            if (Integer.valueOf(resultCode) == 0){
-                                toPayment();
+                            if (Integer.valueOf(resultCode) == 0) {
+                                toPayment(context,
+                                        msisdn,
+                                        idClient,
+                                        idClientMobicash,
+                                        idMerchant,
+                                        idMerchantMobicash,
+                                        idTransaction,
+                                        idVersion,
+                                        token,
+                                        amount);
+                            } else if (Integer.parseInt(activation.getResultCode()) == 209) {
+                                //et_msisdn.getText().clear();
+                                //erreurOtp.setText(getResources().getString(R.string.code_otp_incorect));
+                                Toast.makeText(context, context.getResources().getString(R.string.code_otp_incorect), Toast.LENGTH_LONG).show();
+                                layoutMsisdn.setVisibility(View.VISIBLE);
                             }else {
-                                Toast.makeText(context, Shared.CheckError(context,resultCode), Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, Shared.CheckError(context, resultCode), Toast.LENGTH_LONG).show();
                                 layoutMsisdn.setVisibility(View.VISIBLE);
                             }
                         }
@@ -298,7 +338,7 @@ public class LoginDialog {
                             layoutMsisdn.setVisibility(View.VISIBLE);
                         }
                     });
-        }catch (IllegalBlockSizeException e) {
+        } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -316,27 +356,29 @@ public class LoginDialog {
 
     }
 
-    private void toPayment() {
+    private void toPayment(Context context, String msisdn, String idClient, String idClientMobicash, String idMerchant, String idMerchantMobicash, String idTransaction, String idVersion, String token, String amount) {
         loginDialog.dismiss();
-        UserManager.showPaymentDialog(context,
-                etMsisdn.getRawText(),
-                "21633225580",                    //idClient
-                "39565976545795695", //idClientMobicash
-                "56956U78Y30U466086086",           //idMerchant
-                "5690557U07580757U0773",    //idMerchantMobicash
-                "192035558706770787",//idTransaction
-                "1.2.1",//idVersion
-                "sfzshvljefùperfeùlkhveeùojetvbtlhveovejveùpigve",      //token
-                "10000",//amount
-                 paymentCallback);
+        UserManager.showPaymentDialog(
+                context,
+                msisdn,
+                idClient,
+                idClientMobicash,
+                idMerchant,
+                idMerchantMobicash,
+                idTransaction,
+                idVersion,
+                token,
+                amount,
+                paymentCallback);
     }
+
     public void hideKeyboard() {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
 
         if (imm.isAcceptingText()) {
             imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
             //Find the currently focused view, so we can grab the correct window token from it.
-            View view = ((FragmentActivity)context).getCurrentFocus();
+            View view = ((FragmentActivity) context).getCurrentFocus();
             //If no view currently has focus, create a new one, just so we can grab a window token from it
             if (view == null) {
                 view = new View(context);
@@ -344,5 +386,13 @@ public class LoginDialog {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
 
+    }
+
+    public String getMsisdn() {
+        return msisdn;
+    }
+
+    public void setMsisdn(String msisdn) {
+        this.msisdn = msisdn;
     }
 }

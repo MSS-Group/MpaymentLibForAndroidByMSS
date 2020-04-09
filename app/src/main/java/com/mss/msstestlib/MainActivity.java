@@ -61,12 +61,20 @@ public class MainActivity extends AppCompatActivity {
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UserManager.showLoginDialog(MainActivity.this, new PaymentCallback() {
-                    @Override
-                    public void payment(int resultCode, String message) {
-                        Log.e(TAG,"resultCode : "+resultCode+"\n Message : "+message);
-                    }
-                });
+                UserManager.showLoginDialog(MainActivity.this,
+                        "5690557U07580757U0773",                    //idClient
+                        "39565976545795695", //idClientMobicash
+                        "56956U78Y30U466086086",           //idMerchant
+                        "21620306090",    //idMerchantMobicash
+                        "192035558706770787",//idTransaction
+                        "1.2.0",//idVersion
+                        "sfzshvljefùperfeùlkhveeùojetvbtlhveovejveùpigve",      //token
+                        "10000", new PaymentCallback() {
+                            @Override
+                            public void payment(int resultCode, String message) {
+                                Log.e(TAG, "resultCode : " + resultCode + "\n Message : " + message);
+                            }
+                        });
             }
         });
 

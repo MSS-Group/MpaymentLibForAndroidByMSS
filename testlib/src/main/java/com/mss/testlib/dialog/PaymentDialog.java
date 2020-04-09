@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mss.testlib.BuildConfig;
 import com.mss.testlib.R;
 import com.mss.testlib.data.ApiClient;
 import com.mss.testlib.data.model.Authentification;
@@ -55,7 +56,7 @@ public class PaymentDialog {
     private Context context;
     private String amount;
     private String msisdn;
-    private String idClient;
+    private String idMerchantMobicash;
     private int paymentResultCode;
     private String paymentMessage;
     private int state = 0;
@@ -70,11 +71,11 @@ public class PaymentDialog {
     private static final double DIALOG_WINDOW_WIDTH = 0.85;
     private PassCodeView passCodeView;
 
-    public PaymentDialog(Context context, String msisdn, String idClient, String amount) {
+    public PaymentDialog(Context context, String msisdn, String idMerchantMobicash, String amount) {
         this.context = context;
         this.amount = amount;
         this.msisdn = msisdn;
-        this.idClient = idClient;
+        this.idMerchantMobicash = idMerchantMobicash;
         init();
     }
 
@@ -196,7 +197,7 @@ public class PaymentDialog {
                         @Override
                         public SingleSource<TransfertProOutput> apply(Token token) throws Exception {
                             TransfertProInput input = new TransfertProInput("216" + msisdn
-                                    , idClient
+                                    , idMerchantMobicash
                                     , id.getIMEI()
                                     , idSession
                                     , RSA.Encrypt(passCodeView.getPassCodeText())
@@ -277,7 +278,7 @@ public class PaymentDialog {
                                     .authentificationWithHachage("216" + msisdn, id.getIMEI(), idSession, "C"
                                             , RSA.Encrypt(passCodeView.getPassCodeText())
                                             , "************"
-                                            , CryptoHash.sha256(("216" + msisdn) + id.getIMEI() + idSession + "C" + passCodeView.getPassCodeText() + "aed11c1b6ff44ffdcc9fbe634bd4c55e8e623415d3b27fc9424f1ea7c425515f")
+                                            , CryptoHash.sha256(("216" + msisdn) + id.getIMEI() + idSession + "C" + passCodeView.getPassCodeText() + BuildConfig.passwordHashMss)
                                             , token);
                         }
                     })
