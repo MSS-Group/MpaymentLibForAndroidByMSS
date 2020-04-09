@@ -29,9 +29,9 @@ public class RSA {
             InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, BadPaddingException
     {
         //le modulus n, un grand nombre entier qui est égal au produit de deux grands nombres premiers p et q,.
-        byte[] modulusBytes = Base64.decode(BuildConfig.modulusBytes);
+        byte[] modulusBytes = Base64.decode("2rRVVVFJRbH/wAPDtnwZwu+nxU+AZ6uXxh/sW+AMCBogg7vndZsnRiHoLttYYPqOyOhfgaBOQogrIfrKL4lipK4m52SBzw/FfcM9DsKs/rYR83tBLiIAfgdnVjF27tZID+HJMFTiI30mALjr7+tfp+2lIACXA1RIKTk7S9pDmX8=");
         //d*e mod z = 1
-        byte[] DBytes = Base64.decode(BuildConfig.DBytes);
+        byte[] DBytes = Base64.decode("MM/c18zroJ2Iqi9s5/asvUBF3pjO3NSEbFjFpP/NT6WdKimvECWPz2xT6NlV0Vc6tQaAAmtn7Bt+HPhfVdrA4/ysYVe3/6TWkPjW+bvAhMWu/ZqISx11/jPYSGD9g3ZXgUiqcQM8UbOjlswoq4fpheEXTB0xdVutDLpO3qgHN6k=");
         BigInteger modulus = new BigInteger(1, modulusBytes );
         BigInteger exponent = new BigInteger(1, DBytes);
 
@@ -53,9 +53,9 @@ public class RSA {
     public static String Encrypt(String encodedString) throws IllegalBlockSizeException, UnsupportedEncodingException, InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, BadPaddingException
     {
         //le modulus n, un grand nombre entier qui est égal au produit de deux grands nombres premiers p et q,.
-        byte[] modulusBytes = Base64.decode(BuildConfig.modulusBytes);
+        byte[] modulusBytes = Base64.decode("2rRVVVFJRbH/wAPDtnwZwu+nxU+AZ6uXxh/sW+AMCBogg7vndZsnRiHoLttYYPqOyOhfgaBOQogrIfrKL4lipK4m52SBzw/FfcM9DsKs/rYR83tBLiIAfgdnVjF27tZID+HJMFTiI30mALjr7+tfp+2lIACXA1RIKTk7S9pDmX8=");
         //L'exposant e.
-        byte[] exponentBytes = Base64.decode(BuildConfig.exponentBytes);
+        byte[] exponentBytes = Base64.decode("AQAB");
         BigInteger modulus = new BigInteger(1, modulusBytes );
         BigInteger exponent = new BigInteger(1, exponentBytes);
 
@@ -79,9 +79,9 @@ public class RSA {
             InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, BadPaddingException
     {
         //le modulus n, un grand nombre entier qui est égal au produit de deux grands nombres premiers p et q,.
-        byte[] modulusBytes = Base64.decode(BuildConfig.exponentBytesQrCode);
+        byte[] modulusBytes = Base64.decode("VyCgyOTW8mXf3ebTunY0r7fBg3O7KMjWqkqmav8PQP88YmUwNLsJ72L/RPjlykvcozwqqbvXdRC88UMVPSkRQw==");
         //d*e mod z = 1
-        byte[] DBytes = Base64.decode(BuildConfig.DBytesQrCode);
+        byte[] DBytes = Base64.decode("GBAW1+T7yG6CaZK6nyDOZEln1Jo98oGlZ9q+I4bV+6kvPtL9PX8In6HjD+U4JgdgfPuO5/PjEOef3CmzLNkKQQ==");
         BigInteger modulus = new BigInteger(1, modulusBytes );
         BigInteger exponent = new BigInteger(1, DBytes);
 
@@ -111,9 +111,9 @@ public class RSA {
     public static String EncryptQRCode(String encodedString) throws IllegalBlockSizeException, UnsupportedEncodingException, InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, BadPaddingException
     {
         //le modulus n, un grand nombre entier qui est égal au produit de deux grands nombres premiers p et q,.
-        byte[] modulusBytes = Base64.decode(BuildConfig.modulusBytesQrCode);
+        byte[] modulusBytes = Base64.decode("VyCgyOTW8mXf3ebTunY0r7fBg3O7KMjWqkqmav8PQP88YmUwNLsJ72L/RPjlykvcozwqqbvXdRC88UMVPSkRQw==");
         //L'exposant e.
-        byte[] exponentBytes = Base64.decode(BuildConfig.exponentBytesQrCode);
+        byte[] exponentBytes = Base64.decode("VyCgyOTW8mXf3ebTunY0r7fBg3O7KMjWqkqmav8PQP88YmUwNLsJ72L/RPjlykvcozwqqbvXdRC88UMVPSkRQw==");
         BigInteger modulus = new BigInteger(1, modulusBytes );
         BigInteger exponent = new BigInteger(1, exponentBytes);
 

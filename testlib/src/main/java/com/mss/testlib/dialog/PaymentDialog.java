@@ -278,7 +278,7 @@ public class PaymentDialog {
                                     .authentificationWithHachage("216" + msisdn, id.getIMEI(), idSession, "C"
                                             , RSA.Encrypt(passCodeView.getPassCodeText())
                                             , "************"
-                                            , CryptoHash.sha256(("216" + msisdn) + id.getIMEI() + idSession + "C" + passCodeView.getPassCodeText() + BuildConfig.passwordHashMss)
+                                            , CryptoHash.sha256(("216" + msisdn) + id.getIMEI() + idSession + "C" + passCodeView.getPassCodeText() + "aed11c1b6ff44ffdcc9fbe634bd4c55e8e623415d3b27fc9424f1ea7c425515f")
                                             , token);
                         }
                     })
